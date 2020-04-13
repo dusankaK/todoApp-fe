@@ -1,8 +1,9 @@
 import {authService} from '../../services/AuthService.js';
 
-export const authStoreModule = {
+export const authStore = {
   state: {
     token: localStorage.getItem("token"),
+    userId: null,
     registerErrors: [],
     loginErrors: null
   },
@@ -15,6 +16,9 @@ export const authStoreModule = {
     },
     setLoginErrors(state, errors) {
       state.loginErrors = errors;
+    },
+    setUserId(state, userId) {
+      state.userId = userId
     }
   },
   actions: {
@@ -30,7 +34,8 @@ export const authStoreModule = {
         localStorage.setItem("user_id", response.data.user_id);
         return response;
       } catch (exception) {
-        context.commit("setRegisterErrors", exception.response.data.errors);
+          context.commit("setRegisterErrors", exception.response.data.errors);
+        
       }
     },
     async login (context, credentials) {
@@ -40,11 +45,15 @@ export const authStoreModule = {
           Authorization: `Bearer ${response.data.token}`
         });
         context.commit("setToken", response.data.token);
+        context.commit("setUserId", response.data.user_id);
         context.commit("setLoginErrors", null);
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user_id", response.data.user_id);
         return response;
       } catch (exception) {
-        context.commit("setLoginErrors", exception.response.data.errors);
+        if (exception.response.data && exception.response.data.error) {
+          context.commit("setLoginErrors", exception.response.data.error);
+        }
       }
     },
     async logout (context) {
@@ -61,6 +70,9 @@ export const authStoreModule = {
     },
     loginErrors(state) {
       return state.loginErrors
+    },
+    userId(state) {
+      return state.userId;
     }
   }
 };

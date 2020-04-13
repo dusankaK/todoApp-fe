@@ -1,7 +1,7 @@
 import axios from 'axios'
 const ROOT_URL = 'https://jsonplaceholder.typicode.com';
 
-export const TodosStoreModule = {
+export const TodosStore = {
   state: {
     todos: []
   },
