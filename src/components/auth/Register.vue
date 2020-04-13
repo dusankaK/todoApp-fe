@@ -45,10 +45,10 @@ export default {
   data() {
     return {
       newUser: {
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: ''
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: ""
       }
     }
   },

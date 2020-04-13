@@ -19,8 +19,16 @@
               >Todo App<span class="sr-only">(current)</span></router-link
             >
           </li>
-          <li class="nav-item">
+          <li v-if="!isUserLoggedIn"
+              class="nav-item">
+            <router-link class="nav-link" :to="{ name: 'login' }">Login</router-link>
+          </li>
+          <li v-if="!isUserLoggedIn"
+              class="nav-item">
             <router-link class="nav-link" :to="{ name: 'register' }">Register</router-link>
+          </li>
+          <li v-if="isUserLoggedIn" class="nav-item">
+            <a class="nav-link" href="#" @click.prevent="logoutUser()">Logout</a>
           </li>
         </ul>
       </div>
@@ -28,15 +36,24 @@
   </div>
 </template>
 <script>
-//import { mapActions, mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
     name: 'Header',
-    // methods: {
-    //     ...mapActions(['fetchCurrentUser', 'loginUser']),
-    // },
-    // computed: mapGetters(['getUser']),
-    // created() {
-    //     this.fetchCurrentUser({});
-    // }
+    computed: {
+      ...mapGetters({
+        isUserLoggedIn: "isUserLoggedIn"
+      })
+    },
+    methods: {
+      ...mapActions({
+        logout: "logout"
+      }),
+      logoutUser() {
+        this.logout()
+          .then(() => {
+            this.$router.push({ name: "login" })
+          })
+      }
+    }
 }
 </script>
