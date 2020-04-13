@@ -2,13 +2,12 @@
   <div class="container">
     <h2 class="center">My Todos</h2>
     <div class="todos">
-      <div v-for="todo in allTodos" :key="todo.id" class="todo">{{todo.title}}
-        <div>
-            <button v-on:click="removeTodo(todo.id)">delete</button>
-        </div>
+      <div v-for="todo in allTodos" :key="todo.id" class="todo">
+        <p>{{todo.title}}</p>
+        <button v-on:click="removeTodo(todo.id)">delete</button>
+      </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -24,7 +23,11 @@ export default {
   methods: {
     ...mapActions({
       fetchTodos: 'fetchTodos',
+      deleteTodo: 'deleteTodo'
     }),
+    removeTodo(id){
+      this.deleteTodo(id);
+    }
   
   },
   created() {
