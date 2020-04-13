@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h3>Todos</h3>
+    <h2 class="center">My Todos</h2>
     <div class="todos">
       <div v-for="todo in allTodos" :key="todo.id" class="todo">{{todo.title}}
         <div>
@@ -24,11 +24,8 @@ export default {
   methods: {
     ...mapActions({
       fetchTodos: 'fetchTodos',
-      deleteTodo: 'deleteTodo'
     }),
-    removeTodo(id){
-      this.deleteTodo(id)
-    }
+  
   },
   created() {
     this.fetchTodos();

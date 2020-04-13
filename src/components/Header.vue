@@ -16,8 +16,10 @@
         <ul class="navbar-nav">
           <li class="nav-item active">
             <router-link class="nav-link" to="/todos"
-              >Todo App<span class="sr-only">(current)</span></router-link
-            >
+              >Todo App<span class="sr-only">(current)</span></router-link>
+          </li>
+          <li v-if="isUserLoggedIn" class="nav-item">
+            <a class="nav-link" href="#" @click.prevent="logoutUser()">Logout</a>
           </li>
           <li v-if="!isUserLoggedIn"
               class="nav-item">
@@ -27,14 +29,12 @@
               class="nav-item">
             <router-link class="nav-link" :to="{ name: 'register' }">Register</router-link>
           </li>
-          <li v-if="isUserLoggedIn" class="nav-item">
-            <a class="nav-link" href="#" @click.prevent="logoutUser()">Logout</a>
-          </li>
         </ul>
       </div>
     </nav>
   </div>
 </template>
+
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
@@ -57,3 +57,6 @@ export default {
     }
 }
 </script>
+
+<style>  
+</style>
