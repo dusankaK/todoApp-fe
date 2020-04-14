@@ -25,9 +25,6 @@ export const authStore = {
     async registerUser(context, credentials) {
       try {
         const response = await authService.register(credentials);
-        authService.setHeaders({
-          Authorization: `Bearer ${response.data.token}`
-        });
         context.commit("setToken", response.data.token);
         context.commit("setRegisterErrors", null);
         localStorage.setItem("token", response.data.token);
@@ -41,9 +38,6 @@ export const authStore = {
     async login (context, credentials) {
       try {
         const response = await authService.login(credentials);
-        authService.setHeaders({
-          Authorization: `Bearer ${response.data.token}`
-        });
         context.commit("setToken", response.data.token);
         context.commit("setUserId", response.data.user_id);
         context.commit("setLoginErrors", null);

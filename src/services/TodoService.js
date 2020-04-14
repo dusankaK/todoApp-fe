@@ -1,11 +1,16 @@
-import { HttpService } from "./HttpService.js";
+import { httpService } from "./HttpService.js";
 
-class TodoService extends HttpService {
+const ENDPOINTS = {
+  TODOS: "/todos",
+  TODO: id => `/todos/${id}`
+};
+
+class TodoService{
   getAll() {
-    return this.axios.get('/todos');
+    return httpService.getApiClient().get(ENDPOINTS.TODOS);
   }
   deleteTodo(id) {
-    return this.axios.delete(`/todos/${id}`)
+    return httpService.getApiClient().delete(ENDPOINTS.TODO(id))
   }
 }
 

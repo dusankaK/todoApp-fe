@@ -1,17 +1,34 @@
 import axios from "axios";
 
-export class HttpService {
-  constructor() {
-    axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
-    axios.defaults.headers.accept = "application/json";
-    this.axios = axios;
+const baseURL = "http://127.0.0.1:8000/api/"
 
-    Object.assign(this.axios.defaults.headers.common, {
-      Authorization: `Bearer ${localStorage.getItem("token")}`
+class HttpService {
+  constructor() {
+    this.client = axios.create({
+      baseURL
     });
+    this.setInterceptor();
   }
 
-  setHeaders(headers) {
-    Object.assign(axios.defaults.headers.common, headers);
+  setInterceptor = () => {
+    this.client.interceptors.request.use(config => {
+      const token = window.localStorage.getItem("token");
+
+      /*eslint no-extra-boolean-cast: 2*/
+      var tokenTrue = !!token
+      if (tokenTrue) {
+        const {assign} = Object
+        const {headers} = config
+        assign(headers, {Authorization: `Bearer ${token}`})
+      }
+
+      return config;
+    });
+  };
+
+  getApiClient() {
+    return this.client;
   }
 }
+
+export const httpService = new HttpService();

@@ -1,12 +1,17 @@
-import { HttpService } from "./HttpService.js";
+import { httpService } from "./HttpService.js";
 
-class AuthService extends HttpService {
+const ENDPOINTS = {
+  LOGIN: "/login",
+  REGISTER: "/register"
+};
+
+class AuthService {
   login(credentials) {
-    return this.axios.post("/login", credentials);
+    return httpService.getApiClient().post(ENDPOINTS.LOGIN, credentials);
   }
 
   register(credentials) {
-    return this.axios.post("/register", credentials);
+    return httpService.getApiClient().post(ENDPOINTS.REGISTER, credentials);
   }
 }
 
