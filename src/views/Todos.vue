@@ -1,14 +1,45 @@
 <template>
   <div class="container">
     <add-new-todo></add-new-todo>
-    <h2 class="text-center mt-4">My Todos</h2>
-    <div class="todos">
-      <div v-for="todo in allTodos" :key="todo.id" class="todo">
-        <p>{{todo.title}}</p>
-        <button v-on:click="removeTodo(todo.id)">delete</button>
-      </div>
-      </div>
-    </div>
+    <ul>
+      <li class="todo-item card w-100 mt-3"
+          v-for="todo in allTodos" :key="todo.id">
+          <h5 class="card-header w-100">
+              {{todo.title}} 
+            <button
+                @click.stop="removeTodo(todo.id)"
+                type="button"
+                aria-label="Delete"
+                title="Delete"
+                class="btn-picto float-right"
+              >
+              <i class="fa fa-trash-alt" aria-hidden="true"></i>
+            </button>
+            <button
+                type="checkbox"
+                class="btn-picto float-right"
+              >
+                <input type="checkbox" class="btn-picto" />
+                <i
+                  aria-hidden="true"
+                  class="material-icons"
+                >{{ todo.completed ? 'check_box' : 'check_box_outline_blank' }}</i>
+              </button>
+          </h5>
+          <div class="card-body mr-auto w-100">
+              <div class="row">
+                <div class="col-md-8">
+                  <h6>{{todo.description}}</h6>
+                </div>
+                <div class="col-md-4 ml-auto todo-priority text-right">
+                  <div class="priority-dot" :style="{background: todo.priorityColor}"></div>
+                    <span>{{todo.priority }} Priority</span>
+                  </div>
+              </div>
+          </div>
+      </li>
+    </ul>
+</div>
 </template>
 
 <script>
@@ -41,19 +72,21 @@ export default {
 }
 </script>
 <style>
-  .todos {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1rem;
-}
-.todo {
-  border: 1px solid #ccc;
-  background: #7b998b;
-  padding: 1rem;
-  border-radius: 3px;
-  text-align: center;
-  position: relative;
+.btn-picto {
+  border: none;
+  background: none;
+  -webkit-appearance: none;
   cursor: pointer;
+  color: blue;
+}
+
+.priority-dot {
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  background: #333;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 </style>

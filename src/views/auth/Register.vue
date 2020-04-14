@@ -66,7 +66,6 @@ export default {
       registerUser: "registerUser"
     }),
     submit() {
-      
       this.registerUser(this.newUser)
         .then(() => {
           this.$router.push({name: 'todos'})
