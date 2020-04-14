@@ -14,7 +14,6 @@ class HttpService {
     this.client.interceptors.request.use(config => {
       const token = window.localStorage.getItem("token");
 
-      /*eslint no-extra-boolean-cast: 2*/
       var tokenTrue = !!token
       if (tokenTrue) {
         const {assign} = Object

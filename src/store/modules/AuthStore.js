@@ -1,4 +1,4 @@
-import {authService} from '../../services/AuthService.js';
+import {authService} from '@/services/AuthService.js';
 
 export const authStore = {
   state: {
@@ -8,16 +8,16 @@ export const authStore = {
     loginErrors: null
   },
   mutations: {
-    setToken(state, token) {
+    SET_TOKEN(state, token) {
       state.token = token;
     },
-    setRegisterErrors(state, errors) {
+    SET_REGISTER_ERRORS(state, errors) {
       state.registerErrors = errors;
     },
-    setLoginErrors(state, errors) {
+    SET_LOGIN_ERRORS(state, errors) {
       state.loginErrors = errors;
     },
-    setUserId(state, userId) {
+    SET_USER_ID(state, userId) {
       state.userId = userId
     }
   },
@@ -25,33 +25,33 @@ export const authStore = {
     async registerUser(context, credentials) {
       try {
         const response = await authService.register(credentials);
-        context.commit("setToken", response.data.token);
-        context.commit("setRegisterErrors", null);
+        context.commit("SET_TOKEN", response.data.token);
+        context.commit("SET_REGISTER_ERRORS", null);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user_id", response.data.user_id);
         return response;
       } catch (exception) {
-          context.commit("setRegisterErrors", exception.response.data.errors);
+          context.commit("SET_REGISTER_ERRORS", exception.response.data.errors);
         
       }
     },
     async login (context, credentials) {
       try {
         const response = await authService.login(credentials);
-        context.commit("setToken", response.data.token);
-        context.commit("setUserId", response.data.user_id);
-        context.commit("setLoginErrors", null);
+        context.commit("SET_TOKEN", response.data.token);
+        context.commit("SET_USER_ID", response.data.user_id);
+        context.commit("SET_LOGIN_ERRORS", null);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user_id", response.data.user_id);
         return response;
       } catch (exception) {
         if (exception.response.data && exception.response.data.error) {
-          context.commit("setLoginErrors", exception.response.data.error);
+          context.commit("SET_LOGIN_ERRORS", exception.response.data.error);
         }
       }
     },
     async logout (context) {
-      context.commit("setToken", null);
+      context.commit("SET_TOKEN", null);
       localStorage.removeItem("token")
     }
   },

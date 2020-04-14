@@ -26,26 +26,24 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+
 export default {
-    name: 'Header',
-    computed: {
-      ...mapGetters({
-        isUserLoggedIn: "isUserLoggedIn"
-      })
-    },
-    methods: {
-      ...mapActions({
-        logout: "logout"
-      }),
-      logoutUser() {
-        this.logout()
-          .then(() => {
-            this.$router.push({ name: "login" })
-          })
-      }
+  name: 'Header',
+  computed: {
+    ...mapGetters({
+      isUserLoggedIn: "isUserLoggedIn"
+    })
+  },
+  methods: {
+    ...mapActions({
+      logout: "logout"
+    }),
+    logoutUser() {
+      this.logout()
+        .then(() => {
+          this.$router.push({ name: "login" })
+        })
     }
+  }
 }
 </script>
-
-<style>  
-</style>

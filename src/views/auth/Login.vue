@@ -3,7 +3,7 @@
     <div 
       v-if="loginErrors"
       class="alert alert-danger mt-3"
-      style="max-width: 50vw; margin-left: 40px;">
+      style="width: 50vw; margin: 10px auto">
     {{ loginErrors }}
     </div>
     <div class="card rounded-0 smaller">

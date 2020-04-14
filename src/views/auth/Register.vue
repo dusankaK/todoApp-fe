@@ -4,6 +4,7 @@
       v-for="(error, index) in registerErrors"
       :key="index"
       class="alert alert-danger mt-3"
+      style="width: 50vw; margin: 10px auto"
     >{{ error[0] }}</div>
     
     <div class="card rounded-0 smaller">
@@ -65,6 +66,7 @@ export default {
       registerUser: "registerUser"
     }),
     submit() {
+      
       this.registerUser(this.newUser)
         .then(() => {
           this.$router.push({name: 'todos'})

@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <h2 class="center">My Todos</h2>
+    <add-new-todo></add-new-todo>
+    <h2 class="text-center mt-4">My Todos</h2>
     <div class="todos">
       <div v-for="todo in allTodos" :key="todo.id" class="todo">
         <p>{{todo.title}}</p>
@@ -11,8 +12,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-
+import { mapGetters, mapActions } from 'vuex';
+import AddNewTodo from '../components/AddNewTodo';
 export default {
   name: 'Todos',
   computed:{
@@ -23,21 +24,23 @@ export default {
   methods: {
     ...mapActions({
       fetchTodos: 'fetchTodos',
-      deleteTodo: 'deleteTodo'
+      deleteTodo: 'deleteTodo',
+      addTodo: 'addTodo'
     }),
     removeTodo(id){
       this.deleteTodo(id);
     }
-  
   },
   created() {
     this.fetchTodos();
+  },
+  components: {
+    AddNewTodo
   }
 
-  
 }
 </script>
-<style scoped>
+<style>
   .todos {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -52,37 +55,5 @@ export default {
   position: relative;
   cursor: pointer;
 }
-button {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  color: #fff;
-  cursor: pointer;
-}/*
-.legend {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 1rem;
-}
-.complete-box {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background: #35495e;
-}
-.incomplete-box {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background: #41b883;
-}
-.is-complete {
-  background: #35495e;
-  color: #fff;
-}
-@media (max-width: 500px) {
-  .todos {
-    grid-template-columns: 1fr;
-  }
-} */
+
 </style>

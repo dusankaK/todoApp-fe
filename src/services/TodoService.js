@@ -12,6 +12,9 @@ class TodoService{
   deleteTodo(id) {
     return httpService.getApiClient().delete(ENDPOINTS.TODO(id))
   }
+  addTodo(newTodo) {
+    return httpService.getApiClient().post(ENDPOINTS.TODOS, newTodo)
+  }
 }
 
 export const todoService = new TodoService();

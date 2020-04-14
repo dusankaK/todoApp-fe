@@ -1,15 +1,15 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store/index.js'
-import Register from './components/auth/Register';
-import Login from './components/auth/Login';
-import Todos from './components/Todos'
+import Register from './views/auth/Register';
+import Login from './views/auth/Login';
+import Todos from './views/Todos'
 
 Vue.use(Router);
 
 const routes = [
     {
-      path: '/todos',
+      path: '/',
       name: 'todos',
       component: Todos,
       meta: {
@@ -41,7 +41,7 @@ const routes = [
 
   router.beforeEach((to, from, next) => {
     const isUserLoggedIn = store.getters.isUserLoggedIn;
-  
+    
     if (!to.meta.guest && !isUserLoggedIn) {
       return next({
         name: "login"
