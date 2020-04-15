@@ -69,11 +69,20 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['allTodos', 'showUpdate'])
+    ...mapGetters({
+      allTodos: 'allTodos',
+      showUpdate: 'showUpdate'
+    })
   },
   methods: {
-    ...mapActions(['fetchTodos', 'deleteTodo','addTodo','updateTodo','showUpdateForm', 'markComplete']),
-    
+    ...mapActions({
+      fetchTodos: 'fetchTodos',
+      deleteTodo: 'deleteTodo',
+      addTodo: 'addTodo',
+      updateTodo: 'updateTodo',
+      showUpdateForm: 'showUpdateForm',
+      markComplete: 'markComplete'
+    }),
     handleUpdateForm(todoItem) {
       this.updatedTodo.title = todoItem.title;
       this.updatedTodo.description = todoItem.description;

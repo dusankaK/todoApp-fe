@@ -16,7 +16,7 @@ class TodoService{
     return httpService.getApiClient().post(ENDPOINTS.TODOS, newTodo)
   }
   updateTodo(updTodo) {
-    return httpService.getApiClient().put(ENDPOINTS.TODO(updTodo.id), updTodo)
+    return httpService.getApiClient().patch(ENDPOINTS.TODO(updTodo.id), updTodo)
   }
 }
 

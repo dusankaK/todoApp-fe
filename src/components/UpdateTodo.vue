@@ -54,11 +54,15 @@ export default {
 
   computed: {
     isDisabled() {
-      return this.newTodo.title ? false : true;
+      if(this.updatedTodo.title) {
+        return false;
+      } else {
+        return true;
+      }
     }
   },
   methods : {
-    ...mapActions(["updateTodo", "showUpdateForm"]),
+    ...mapActions(["updateTodo"]),
 
     updateExistingTodo() {
       let updatedTodo = {
@@ -67,7 +71,7 @@ export default {
         priority: this.updatedTodo.priority,
         id: this.updatedTodo.id
       };
-      this.updateTodo(updatedTodo);
+      this.updateTodo(updatedTodo)
     }
   }
 }
