@@ -8,7 +8,8 @@ const getPriorityColor = item => {
 
 export const TodosStore = {
   state: {
-    todos: []
+    todos: [],
+    showUpdate: false
   },
   mutations: {
     SET_TODOS: (state, todos) => {
@@ -24,6 +25,21 @@ export const TodosStore = {
     ADD_TODO: (state, todo) => {
       getPriorityColor(todo)
       state.todos.unshift(todo)
+    },
+    UPDATE_TODO: (state, updatedTodo) => {
+      state.todos.filter(todo => {
+        if (todo.id === updatedTodo.id) {
+          todo.title = updatedTodo.title;
+          todo.description = updatedTodo.description;
+          todo.priority = updatedTodo.priority;
+          getPriorityColor(todo);
+        }
+      });
+      state.showUpdate = false;
+    },
+    SHOW_UPDATE_FORM: (state, data) => (state.showUpdate = data),
+    COMPLETED_TODO: (state, id) => {
+      state.todos.findIndex(todo => todo.id === id);
     }
   },
   actions: {
@@ -38,9 +54,22 @@ export const TodosStore = {
     async addTodo(context, data) {
       await todoService.addTodo(data);
       context.commit('ADD_TODO', data)
+    },
+    async updateTodo(context, data) {
+      await todoService.updateTodo(data);
+      context.commit('UPDATE_TODO', data)
+    },
+    async showUpdateForm(context, data) {
+      context.commit('SHOW_UPDATE_FORM', data)
+    },
+    async markComplete(context, todo) {
+      todo.completed = 1;
+      const response = await todoService.updateTodo(todo);
+      context.commit('COMPLETED_TODO', response.data);
     }
   },
   getters: {
-    allTodos: state => state.todos
+    allTodos: state => state.todos,
+    showUpdate: state => state.showUpdate
   }
 }

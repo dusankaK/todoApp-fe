@@ -3,30 +3,30 @@
       style="width:40vw; margin:10px auto;">
     <div class="col-md-12 mt-3">
       <div class="card bg-gradient-secondary mt-3">
-        <form class="card-body" @submit.prevent="addNewTodo()">
-          <h2 class="mb-3">Create a new Todo</h2>
+        <form class="card-body" @submit.prevent="updateExistingTodo()">
+          <h2 class="mb-3">Update Todo</h2>
           <div class="form-group">
               <input
                 class="form-control"
-                placeholder="Todo title.."
+                placeholder="Update title.."
                 name="title"
                 type="text"
-                v-model="newTodo.title"
+                v-model="updatedTodo.title"
               />
           </div>
           <br />
           <div class="form-group">
               <input
                 class="form-control"
-                placeholder="Todo Description..."
+                placeholder="Update Todo Description..."
                 name="description"
                 type="text"
-                v-model="newTodo.description"
+                v-model="updatedTodo.description"
               />
           </div>
           <div class="form-group">
             <label for="priority">Set Priority</label>
-            <select class="form-control" id="priority" v-model="newTodo.priority">
+            <select class="form-control" id="priority" v-model="updatedTodo.priority">
               <option selected>High</option>
               <option>Medium</option>
               <option>Low</option>
@@ -37,7 +37,7 @@
               :disabled="isDisabled"
               type="submit"
               class="btn btn-primary btn-block"
-            >Create</button>
+            >Update</button>
           </div>
         </form>
       </div>
@@ -46,40 +46,28 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-export default {
-  name: "AddNewTodo",
+import { mapActions } from "vuex"
 
-  data() {
-    return {
-      newTodo: {
-        title: "",
-        description: "",
-        priority: "High",
-      }
-    }
-  },
+export default {
+  name: "UpdateTodo",
+  props: ["updatedTodo"],
+
   computed: {
     isDisabled() {
       return this.newTodo.title ? false : true;
     }
-  },  
-  methods: {
-    ...mapActions(['addTodo']),
-    addNewTodo() {
-      let newTodo = {
-        title: this.newTodo.title,
-        description: this.newTodo.description,
-        priority: this.newTodo.priority,
-        completed: false,
+  },
+  methods : {
+    ...mapActions(["updateTodo", "showUpdateForm"]),
+
+    updateExistingTodo() {
+      let updatedTodo = {
+        title: this.updatedTodo.title,
+        description: this.updatedTodo.description,
+        priority: this.updatedTodo.priority,
+        id: this.updatedTodo.id
       };
-      this.addTodo(newTodo);
-      this.clearForm();
-    },
-    clearForm() {
-      this.newTodo.title = "",
-      this.newTodo.description = "",
-      this.newTodo.priority = "High"
+      this.updateTodo(updatedTodo);
     }
   }
 }

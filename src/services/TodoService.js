@@ -15,6 +15,9 @@ class TodoService{
   addTodo(newTodo) {
     return httpService.getApiClient().post(ENDPOINTS.TODOS, newTodo)
   }
+  updateTodo(updTodo) {
+    return httpService.getApiClient().put(ENDPOINTS.TODO(updTodo.id), updTodo)
+  }
 }
 
 export const todoService = new TodoService();
